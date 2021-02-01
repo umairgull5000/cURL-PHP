@@ -1,0 +1,102 @@
+	$postfields = '{
+	  "StoreId": 5,
+	  "Number": 57,
+	  "CustomerEmailAddress": "test@test.com",
+	  "Date": "2019-12-19T10:34:32.6683824-06:00",
+	  "SubTotal": 45.27,
+	  "Shipping": 45.27,
+	  "Tax": 0,
+	  "DiscountAmount": 0,
+	  "GrandTotal": 45.27,
+	  "TotalPaid": 45.27,
+	  "TotalRefunded": 0,
+	  "TotalDue": 0,
+	  "Payment": {
+	    "Amount": 45.27,
+	    "PaymentType": 0,
+	    "PaymentMethod": "Visa",
+	    "TransactionId": "999992000003"
+	  },
+	  "ShippingAddress": {
+	    "FirstName": "Joshua",
+	    "LastName": "Barnes",
+	    "Line1": "2336 S 156th Circle",
+	    "Line2": "Suite 999993",
+	    "City": "Omaha",
+	    "StateName": "Nebraska",
+	    "StateAbbreviation": "NE",
+	    "ZipCode5": "68130",
+	    "CountryCode": "US",
+	    "PhoneNumber": "803-468-0489"
+	  },
+	  "BillingAddress": {
+	    "FirstName": "Billing",
+	    "LastName": "Address",
+	    "Line1": "2336 S 156th Circle",
+	    "Line2": "",
+	    "City": "Omaha",
+	    "StateName": "Nebraska",
+	    "StateAbbreviation": "NE",
+	    "ZipCode5": "68130",
+	    "CountryCode": "US",
+	    "PhoneNumber": "803-468-0489"
+	  },
+	  "OrderItems": [
+	    {
+	      "SkuNumber": "HGFI-AMHLY-001",
+	      "Name": "American Holly - #1 Container",
+	      "OriginalPrice": 45.27,
+	      "SalePrice": 45.27,
+	      "QuantityOrdered": 1,
+	      "SubTotal": 100.9,
+	      "TaxAmount": 0,
+	      "TaxPercentage": 0,
+	      "DiscountAmount": 0,
+	      "RowTotal": 45.27
+	    }
+	  ],
+	  "Comments": [
+	    {
+	      "Text": "Captured amount of $137.91 online. Transaction ID: \"3-pkqffcmy\"",
+	      "NotifyCustomerByEmail": true,
+	      "Date": "2019-12-19T10:34:32.6723696-06:00"
+	    },
+	    {
+	      "Text": "Test Manual Comment Passed",
+	      "NotifyCustomerByEmail": false,
+	      "Date": "2019-12-19T10:34:32.6723696-06:00"
+	    }
+	  ]
+	}';
+	// $postfields = json_decode( $postfields, true );
+	// $postfields = http_build_query( $postfields );
+
+	$url = "https://hgfn-dev-api.azurewebsites.net/api/Order";
+
+	$username = "smartplanthome";
+	$password = "X8yHDVdBihQnqRm9xrjEw3oL8QdKFLEFuqWXCeKUJ6o=";
+	$CURLOPT_USERPWD = $username . ":" . $password;
+	// $CURLOPT_USERPWD = base64_encode($CURLOPT_USERPWD);
+	// $CURLOPT_USERPWD = "Basic ".$CURLOPT_USERPWD;
+
+	$ch = curl_init();
+
+  curl_setopt($ch, CURLOPT_URL, $url );
+
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json') );
+	// curl_setopt($ch, CURLOPT_HEADER, 1);
+	curl_setopt($ch, CURLOPT_USERPWD, $CURLOPT_USERPWD);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+	curl_setopt($ch, CURLOPT_POST, 1 );
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields );
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  $server_output = curl_exec($ch);
+
+  curl_close ($ch);
+
+	echo "CODE = "; var_dump($httpcode); echo '<br><hr><br>';
+	echo "OUTPUT = "; var_dump($server_output); echo '<br><hr><br>';
+
