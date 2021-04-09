@@ -1,0 +1,6 @@
+jQuery.ajax({
+ url: "demo_test.txt", 
+ success: function(result) {
+  jQuery("#div1").html(result);
+ }
+});
